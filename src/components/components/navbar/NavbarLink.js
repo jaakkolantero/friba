@@ -5,7 +5,7 @@ class NavbarLink extends PureComponent {
   render() {
     const { children, to } = this.props;
     return (
-      <a class="navbar-link" href={to}>
+      <a className="navbar-link" href={to}>
         {children}
       </a>
     );

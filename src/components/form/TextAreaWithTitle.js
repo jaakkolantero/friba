@@ -25,8 +25,8 @@ const TextAreaWithTitle = ({
               onClick={onClick}
             />
           </p>
-          {success && <p class="help is-success">{success}</p>}
-          {error && <p class="help is-danger">{error}</p>}
+          {success && <p className="help is-success">{success}</p>}
+          {error && <p className="help is-danger">{error}</p>}
         </div>
       </div>
     </div>
