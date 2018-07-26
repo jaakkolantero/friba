@@ -21,7 +21,12 @@ class CounterWithTitle extends PureComponent {
             </a>
           </p>
           <p className="control">
-            <a className="button is-static">{count}</a>
+            <a
+              className="button is-static has-text-grey-darker"
+              style={{ width: 32 }}
+            >
+              {count}
+            </a>
           </p>
           <p className="control">
             <a className="button" onClick={onIncrement}>
