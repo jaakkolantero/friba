@@ -1,19 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+
+import Navbar from "./components/components/navbar/Navbar";
+import NavbarBrand from "./components/components/navbar/NavbarBrand";
+import NavbarBurger from "./components/components/navbar/NavbarBurger";
+import NavbarEnd from "./components/components/navbar/NavbarEnd";
+import NavbarItem from "./components/components/navbar/NavbarItem";
+import NavbarMenu from "./components/components/navbar/NavbarMenu";
+
+import Counter from "./components/friba/Counter";
+import CounterWithTitle from "./components/friba/CounterWithTitle";
+
+import InputWithTitle from "./components/form/InputWithTitle";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <React.Fragment>
+        <Navbar modifier="is-primary">
+          <NavbarBrand>
+            <NavbarItem>Friba</NavbarItem>
+            <NavbarBurger />
+          </NavbarBrand>
+        </Navbar>
+      </React.Fragment>
     );
   }
 }
