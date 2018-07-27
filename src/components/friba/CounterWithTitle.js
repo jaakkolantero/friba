@@ -6,7 +6,7 @@ class CounterWithTitle extends PureComponent {
     const { onDecrement, onIncrement, count, title } = this.props;
     return (
       <React.Fragment>
-        <div className="field has-addons">
+        <div className="field has-addons has-addons-centered">
           <p className="control">
             <a
               className="button is-static has-text-grey-darker"
