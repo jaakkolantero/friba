@@ -3,27 +3,39 @@ import PropTypes from "prop-types";
 
 class SelectPlayers extends PureComponent {
   render() {
-    const { players, onToggle } = this.props;
+    const { players, onToggle, showError } = this.props;
     return (
-      <div className="tags">
-        {players.map((player, id) => (
-          <span
-            className={player.selected ? "tag is-primary" : "tag"}
-            key={player.id}
-            data-id={player.id}
-            onClick={() => onToggle(player.id)}
-          >
-            {player.name}
-          </span>
-        ))}
-      </div>
+      <React.Fragment>
+        <div className="tags is-centered">
+          {players.map((player, id) => (
+            <span
+              className={
+                player.selected ? "tag is-primary button" : "tag button"
+              }
+              key={player.id}
+              data-id={player.id}
+              onClick={() => onToggle(player.id)}
+            >
+              {player.name}
+            </span>
+          ))}
+        </div>
+        {showError && (
+          <p className="help is-danger">Please select atleast 1 player</p>
+        )}
+      </React.Fragment>
     );
   }
 }
 
 SelectPlayers.propTypes = {
   players: PropTypes.array.isRequired,
-  onToggle: PropTypes.func
+  onToggle: PropTypes.func,
+  showError: PropTypes.bool
+};
+
+SelectPlayers.defaultProps = {
+  showError: false
 };
 
 export default SelectPlayers;

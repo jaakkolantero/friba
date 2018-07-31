@@ -8,7 +8,9 @@ import {
   addHole,
   removeHole,
   incrementPar,
-  decrementPar
+  decrementPar,
+  togglePlayer,
+  startRound
 } from "reducers/friba/actions";
 
 import CounterWithTitle from "components/friba/CounterWithTitle";
@@ -25,10 +27,14 @@ class Content extends PureComponent {
       holeCount,
       track,
       players,
+      showNameError,
+      showPlayerError,
       onAddHole,
       onRemoveHole,
       onDecrementPar,
-      onIncrementPar
+      onIncrementPar,
+      onTogglePlayer,
+      onStartRound
     } = this.props;
     return (
       <div className="section has-text-centered">
@@ -37,7 +43,9 @@ class Content extends PureComponent {
           title="Name:"
           placeholder="Track name"
           onChange={event => onUpdateTrackName(event.target.value)}
+          error={showNameError && "Name missing"}
         />
+        <hr />
         <CounterWithTitle
           count={holeCount.toString()}
           title="# of holes"
@@ -57,10 +65,13 @@ class Content extends PureComponent {
         <hr />
         <SelectPlayers
           players={players}
-          onToggle={() => console.log("toggle")}
+          onToggle={id => onTogglePlayer(id)}
+          showError={showPlayerError}
         />
         <hr />
-        <a className="button is-primary">Start new game</a>
+        <a className="button is-primary" onClick={onStartRound}>
+          Start new game
+        </a>
       </div>
     );
   }
@@ -69,7 +80,9 @@ class Content extends PureComponent {
 const mapStateToProps = state => ({
   holeCount: state.friba.track.holes.length,
   track: state.friba.track,
-  players: state.friba.players
+  players: state.friba.players,
+  showPlayerError: state.friba.showPlayerError,
+  showNameError: state.friba.showNameError
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -87,6 +100,12 @@ const mapDispatchToProps = dispatch => ({
   },
   onDecrementPar(id) {
     dispatch(decrementPar(id));
+  },
+  onTogglePlayer(id) {
+    dispatch(togglePlayer(id));
+  },
+  onStartRound() {
+    dispatch(startRound());
   }
 });
 

@@ -25,8 +25,8 @@ const InputWithTitle = ({
               onClick={onClick}
             />
           </p>
-          {success && <p className="help is-success">{success}</p>}
           {error && <p className="help is-danger">{error}</p>}
+          {success && <p className="help is-success">{success}</p>}
         </div>
       </div>
     </div>

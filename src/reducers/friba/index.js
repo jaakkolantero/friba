@@ -9,7 +9,9 @@ import {
   PAR_INCREMENT,
   PAR_DECREMENT,
   HOLE_ADD,
-  HOLE_REMOVE
+  HOLE_REMOVE,
+  PLAYER_TOGGLE,
+  ROUND_START
 } from "./actions";
 
 const initialState = {
@@ -20,8 +22,20 @@ const initialState = {
   skippedHoleErrorMessage: false,
   track: {
     name: "",
-    holes: [{ id: v4(), par: 3 }]
+    holes: [
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 },
+      { id: v4(), par: 3 }
+    ]
   },
+  showNameError: false,
+  showPlayerError: false,
   players: [
     {
       name: "player1",
@@ -41,6 +55,14 @@ const initialState = {
     },
     {
       name: "player3",
+      id: v4(),
+      selected: false,
+      scores: [],
+      toPar: "0",
+      position: "1"
+    },
+    {
+      name: "player4",
       id: v4(),
       selected: false,
       scores: [],
@@ -81,7 +103,7 @@ function friba(state = initialState, action) {
           holes: state.track.holes.map(
             (hole, i) =>
               hole.id === action.payload
-                ? { ...hole, par: Number(hole.par) + 1 }
+                ? { ...hole, par: Math.min(Number(hole.par) + 1, 99) }
                 : hole
           )
         }
@@ -98,6 +120,37 @@ function friba(state = initialState, action) {
                 : hole
           )
         }
+      };
+    case PLAYER_TOGGLE:
+      return {
+        ...state,
+        players: state.players.map(
+          (player, i) =>
+            player.id === action.payload
+              ? { ...player, selected: !player.selected }
+              : player
+        )
+      };
+    case ROUND_START:
+      var playerError = false;
+      var nameError = false;
+      var startRound = true;
+      if (
+        !state.players.filter(player => player.selected === true).length > 0
+      ) {
+        playerError = true;
+      }
+      if (!state.track.name.length > 0) {
+        nameError = true;
+      }
+      if (nameError || playerError) {
+        startRound = false;
+      }
+      return {
+        ...state,
+        showPlayerError: playerError,
+        showNameError: nameError,
+        started: startRound
       };
       return;
     default:
