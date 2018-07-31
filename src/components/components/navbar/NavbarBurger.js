@@ -15,7 +15,7 @@ class NavbarBurger extends PureComponent {
   }
 }
 
-NavbarBurger.PropTypes = {
+NavbarBurger.propTypes = {
   isActive: PropTypes.bool
 };
 

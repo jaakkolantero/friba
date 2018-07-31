@@ -39,7 +39,7 @@ class CounterWithTitle extends PureComponent {
   }
 }
 
-CounterWithTitle.PropTypes = {
+CounterWithTitle.propTypes = {
   onDecrement: PropTypes.func,
   onIncrement: PropTypes.func,
   count: PropTypes.string,

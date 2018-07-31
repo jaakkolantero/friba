@@ -21,7 +21,7 @@ class SelectPlayers extends PureComponent {
   }
 }
 
-SelectPlayers.PropTypes = {
+SelectPlayers.propTypes = {
   players: PropTypes.array.isRequired,
   onToggle: PropTypes.func
 };
