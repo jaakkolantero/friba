@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Content from "./layout/Content";
+import Router from "./layout/Router";
 import Header from "./layout/Header";
 
 class Layout extends Component {
@@ -7,7 +7,7 @@ class Layout extends Component {
     return (
       <React.Fragment>
         <Header />
-        <Content />
+        <Router />
       </React.Fragment>
     );
   }

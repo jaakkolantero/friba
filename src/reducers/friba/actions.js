@@ -5,6 +5,9 @@ export const PAR_INCREMENT = "PAR_INCREMENT";
 export const PAR_DECREMENT = "PAR_DECREMENT";
 export const PLAYER_TOGGLE = "PLAYER_TOGGLE";
 export const ROUND_START = "ROUND_START";
+export const CURRENT_HOLE_SET = "CURRENT_HOLE_SET";
+export const SCORE_INCREMENT = "SCORE_INCREMENT";
+export const SCORE_DECREMENT = "SCORE_DECREMENT";
 
 export function updateTrackName(payload) {
   return {
@@ -51,6 +54,27 @@ export function togglePlayer(payload) {
 export function startRound(payload) {
   return {
     type: ROUND_START,
+    payload
+  };
+}
+
+export function setCurrentHole(payload) {
+  return {
+    type: CURRENT_HOLE_SET,
+    payload
+  };
+}
+
+export function incrementScore(payload) {
+  return {
+    type: SCORE_INCREMENT,
+    payload
+  };
+}
+
+export function decrementScore(payload) {
+  return {
+    type: SCORE_DECREMENT,
     payload
   };
 }

@@ -11,13 +11,16 @@ import {
   HOLE_ADD,
   HOLE_REMOVE,
   PLAYER_TOGGLE,
-  ROUND_START
+  ROUND_START,
+  CURRENT_HOLE_SET,
+  SCORE_INCREMENT,
+  SCORE_DECREMENT
 } from "./actions";
 
 const initialState = {
   started: false,
   finished: false,
-  onHole: "",
+  currentHole: "",
   skippedHole: false,
   skippedHoleErrorMessage: false,
   track: {
@@ -40,16 +43,16 @@ const initialState = {
     {
       name: "player1",
       id: v4(),
-      selected: false,
-      scores: [],
+      selected: true,
+      scores: ["-", "-", "-", "-", "-", "-", "-", "-", "-"],
       toPar: "0",
       position: "1"
     },
     {
       name: "player2",
       id: v4(),
-      selected: false,
-      scores: [],
+      selected: true,
+      scores: ["-", "-", "-", "-", "-", "-", "-", "-", "-"],
       toPar: "0",
       position: "1"
     },
@@ -135,24 +138,81 @@ function friba(state = initialState, action) {
       var playerError = false;
       var nameError = false;
       var startRound = true;
+
+      const newTrack = new Array(state.track.holes.length).fill("-");
+
       if (
-        !state.players.filter(player => player.selected === true).length > 0
+        state.players.filter(player => player.selected === true).length <= 0
       ) {
         playerError = true;
       }
+
       if (!state.track.name.length > 0) {
         nameError = true;
       }
+
       if (nameError || playerError) {
         startRound = false;
       }
+
       return {
         ...state,
         showPlayerError: playerError,
         showNameError: nameError,
-        started: startRound
+        started: startRound,
+        players: state.players.map(
+          (player, i) =>
+            player.selected === true ? { ...player, scores: newTrack } : player
+        )
       };
-      return;
+    case CURRENT_HOLE_SET:
+      return { ...state, currentHole: action.payload };
+    case SCORE_INCREMENT:
+      return {
+        ...state,
+        players: state.players.map(
+          (player, i) =>
+            player.id === action.payload
+              ? {
+                  ...player,
+                  scores: [
+                    ...player.scores.slice(0, state.currentHole - 1),
+                    player.scores[state.currentHole - 1] === "-"
+                      ? state.track.holes[state.currentHole - 1].par.toString()
+                      : Math.min(
+                          Number(player.scores[state.currentHole - 1]) + 1,
+                          99
+                        ).toString(),
+                    ...player.scores.slice(state.currentHole)
+                  ]
+                }
+              : player
+        )
+      };
+    case SCORE_DECREMENT:
+      return {
+        ...state,
+        players: state.players.map(
+          (player, i) =>
+            player.id === action.payload
+              ? {
+                  ...player,
+                  scores: [
+                    ...player.scores.slice(0, state.currentHole - 1),
+                    player.scores[state.currentHole - 1] === "-"
+                      ? (
+                          state.track.holes[state.currentHole - 1].par - 1
+                        ).toString()
+                      : Math.max(
+                          Number(player.scores[state.currentHole - 1]) - 1,
+                          1
+                        ).toString(),
+                    ...player.scores.slice(state.currentHole)
+                  ]
+                }
+              : player
+        )
+      };
     default:
       return state;
   }

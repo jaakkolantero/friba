@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 
 class CounterWithTitle extends PureComponent {
   render() {
-    const { onDecrement, onIncrement, count, title } = this.props;
+    const { onDecrement, onIncrement, count, title, id } = this.props;
     return (
       <React.Fragment>
         <div className="field has-addons has-addons-centered">
           <p className="control">
-            <a
-              className="button is-static has-text-grey-darker"
-              onClick={onDecrement}
-            >
-              {title}
-            </a>
+            <a className="button is-static has-text-grey-darker">{title}</a>
           </p>
           <p className="control">
-            <a className="button" onClick={onDecrement}>
+            <a
+              className="button"
+              data-count={count}
+              data-id={id}
+              onClick={onDecrement}
+            >
               -
             </a>
           </p>
@@ -29,7 +29,12 @@ class CounterWithTitle extends PureComponent {
             </a>
           </p>
           <p className="control">
-            <a className="button" onClick={onIncrement}>
+            <a
+              className="button"
+              data-count={count}
+              data-id={id}
+              onClick={onIncrement}
+            >
               +
             </a>
           </p>

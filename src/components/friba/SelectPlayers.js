@@ -9,10 +9,10 @@ class SelectPlayers extends PureComponent {
         <div className="tags is-centered">
           {players.map((player, id) => (
             <span
+              key={player.id.concat("-select-players")}
               className={
                 player.selected ? "tag is-primary button" : "tag button"
               }
-              key={player.id}
               data-id={player.id}
               onClick={() => onToggle(player.id)}
             >
