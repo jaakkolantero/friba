@@ -2,7 +2,13 @@ import React, { PureComponent } from "react";
 
 class PreviousNextButton extends PureComponent {
   render() {
-    const { currentHole, holeCount, onPreviousClick, onNextClick } = this.props;
+    const {
+      currentHole,
+      holeCount,
+      onPreviousClick,
+      onNextClick,
+      onFinishClick
+    } = this.props;
     const enablePrevious = currentHole > 1;
     const enableNext = currentHole < holeCount;
     const previousClassName = enablePrevious
@@ -18,13 +24,28 @@ class PreviousNextButton extends PureComponent {
         >
           Previous
         </a>
-        <a
-          className={nextClassName}
-          style={{ margin: 8 }}
-          onClick={enableNext ? onNextClick : undefined}
-        >
-          Next
-        </a>
+        {enableNext ? (
+          <a
+            className={nextClassName}
+            style={{ margin: 8 }}
+            onClick={enableNext ? onNextClick : undefined}
+          >
+            Next
+          </a>
+        ) : (
+          undefined
+        )}
+        {!enableNext ? (
+          <a
+            className="button is-primary"
+            style={{ margin: 8 }}
+            onClick={!enableNext ? onFinishClick : undefined}
+          >
+            Finish
+          </a>
+        ) : (
+          undefined
+        )}
       </React.Fragment>
     );
   }

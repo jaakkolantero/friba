@@ -8,6 +8,7 @@ export const ROUND_START = "ROUND_START";
 export const CURRENT_HOLE_SET = "CURRENT_HOLE_SET";
 export const SCORE_INCREMENT = "SCORE_INCREMENT";
 export const SCORE_DECREMENT = "SCORE_DECREMENT";
+export const PLAYERS_RANK = "PLAYERS_RANK";
 
 export function updateTrackName(payload) {
   return {
@@ -75,6 +76,13 @@ export function incrementScore(payload) {
 export function decrementScore(payload) {
   return {
     type: SCORE_DECREMENT,
+    payload
+  };
+}
+
+export function rankPlayers(payload) {
+  return {
+    type: PLAYERS_RANK,
     payload
   };
 }

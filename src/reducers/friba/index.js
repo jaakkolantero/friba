@@ -14,7 +14,8 @@ import {
   ROUND_START,
   CURRENT_HOLE_SET,
   SCORE_INCREMENT,
-  SCORE_DECREMENT
+  SCORE_DECREMENT,
+  PLAYERS_RANK
 } from "./actions";
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
   skippedHoleErrorMessage: false,
   track: {
     name: "",
+    sum: "",
     holes: [
       { id: v4(), par: 3 },
       { id: v4(), par: 3 },
@@ -46,7 +48,7 @@ const initialState = {
       selected: true,
       scores: ["-", "-", "-", "-", "-", "-", "-", "-", "-"],
       toPar: "0",
-      position: "1"
+      position: "-"
     },
     {
       name: "player2",
@@ -54,7 +56,7 @@ const initialState = {
       selected: true,
       scores: ["-", "-", "-", "-", "-", "-", "-", "-", "-"],
       toPar: "0",
-      position: "1"
+      position: "-"
     },
     {
       name: "player3",
@@ -62,7 +64,7 @@ const initialState = {
       selected: false,
       scores: [],
       toPar: "0",
-      position: "1"
+      position: "-"
     },
     {
       name: "player4",
@@ -70,7 +72,7 @@ const initialState = {
       selected: false,
       scores: [],
       toPar: "0",
-      position: "1"
+      position: "-"
     }
   ]
 };
@@ -212,6 +214,34 @@ function friba(state = initialState, action) {
                 }
               : player
         )
+      };
+    case PLAYERS_RANK:
+      const rankedPlayers = state.players.map((player, i) => {
+        if (player.selected === true) {
+          let score = player.scores.reduce((a, b) => Number(a) + Number(b), 0);
+          let sum = state.track.holes.reduce((a, b) => a + b.par, 0);
+          console.log(`Sum: ${sum}`);
+          console.log(`Score: ${score}`);
+          return { ...player, toPar: (score - sum).toString() };
+        }
+        return player;
+      });
+
+      return {
+        ...state,
+        players: state.players.map((player, i) => {
+          console.log(player.selected);
+          if (player.selected === true) {
+            let score = player.scores.reduce(
+              (a, b) => Number(a) + Number(b),
+              0
+            );
+            let sum = state.track.holes.reduce((a, b) => a + b.par, 0);
+            var toPar = isNaN(score) ? "-" : (score - sum).toString();
+            return { ...player, toPar: toPar };
+          }
+          return player;
+        })
       };
     default:
       return state;

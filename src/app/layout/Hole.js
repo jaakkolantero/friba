@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import {
   setCurrentHole,
   incrementScore,
-  decrementScore
+  decrementScore,
+  rankPlayers
 } from "reducers/friba/actions";
 
 import CourseSelector from "components/friba/CourseSelector";
@@ -23,6 +24,7 @@ class Hole extends PureComponent {
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
+    this.handleFinishClick = this.handleFinishClick.bind(this);
   }
   componentDidMount() {
     var currentHole = this.props.match.params.id;
@@ -31,12 +33,23 @@ class Hole extends PureComponent {
 
   handleNextClick() {
     var currentHole = this.props.match.params.id;
-    this.setState(() => ({ redirectTo: Number(currentHole) + 1 }));
+    this.setState(() => ({
+      redirectTo: "/hole/".concat(Number(currentHole) + 1)
+    }));
   }
 
   handlePreviousClick() {
     var currentHole = this.props.match.params.id;
-    this.setState(() => ({ redirectTo: Number(currentHole) - 1 }));
+    this.setState(() => ({
+      redirectTo: "/hole/".concat(Number(currentHole) - 1)
+    }));
+  }
+
+  handleFinishClick() {
+    this.props.onRankPlayers();
+    this.setState(() => ({
+      redirectTo: "/scorecard"
+    }));
   }
 
   handleSelectCourse(course) {
@@ -44,14 +57,12 @@ class Hole extends PureComponent {
   }
 
   handleIncrement(event) {
-    const { currentHole, onIncrementScore } = this.props;
-    const score = event.target.dataset.count;
+    const { onIncrementScore } = this.props;
     const id = event.target.dataset.id;
     onIncrementScore(id);
   }
   handleDecrement(event) {
-    const { currentHole, onDecrementScore } = this.props;
-    const score = event.target.dataset.count;
+    const { onDecrementScore } = this.props;
     const id = event.target.dataset.id;
     onDecrementScore(id);
   }
@@ -62,7 +73,7 @@ class Hole extends PureComponent {
     const selectedPlayers = players.filter(player => player.selected);
     return (
       <React.Fragment>
-        {redirectTo && <Redirect to={"/hole/".concat(redirectTo)} />}
+        {redirectTo && <Redirect to={redirectTo} />}
         <div className="section has-text-centered">
           <div className="field">
             <label className="label">
@@ -86,6 +97,7 @@ class Hole extends PureComponent {
             holeCount={holeCount}
             onPreviousClick={this.handlePreviousClick}
             onNextClick={this.handleNextClick}
+            onFinishClick={this.handleFinishClick}
           />
           <CourseSelector
             holes={holeCount}
@@ -106,6 +118,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  onRankPlayers(payload) {
+    dispatch(rankPlayers(payload));
+  },
   onSetCurrentHole(payload) {
     dispatch(setCurrentHole(payload));
   },
