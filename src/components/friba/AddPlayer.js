@@ -4,7 +4,7 @@ class AddPlayer extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      name: undefined
+      name: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }

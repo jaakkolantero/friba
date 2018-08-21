@@ -11,17 +11,21 @@ import {
   incrementPar,
   decrementPar,
   togglePlayer,
-  startRound
+  startRound,
+  addPlayer
 } from "reducers/friba/actions";
 
 import CounterWithTitle from "components/friba/CounterWithTitle";
 import InputWithTitle from "components/form/InputWithTitle";
 import SelectPlayers from "components/friba/SelectPlayers";
+import AddPlayer from "components/friba/AddPlayer";
 
 class NewGame extends PureComponent {
   constructor(props) {
     super(props);
   }
+
+  onAddPlayer = player => e => console.log("asdf");
   render() {
     const {
       onUpdateTrackName,
@@ -36,7 +40,8 @@ class NewGame extends PureComponent {
       onDecrementPar,
       onIncrementPar,
       onTogglePlayer,
-      onStartRound
+      onStartRound,
+      onAddPlayer
     } = this.props;
     return (
       <React.Fragment>
@@ -72,6 +77,7 @@ class NewGame extends PureComponent {
             onToggle={id => onTogglePlayer(id)}
             showError={showPlayerError}
           />
+          <AddPlayer onAddPlayer={onAddPlayer} />
           <hr />
           <a className="button is-primary" onClick={onStartRound}>
             Start new game
@@ -112,6 +118,9 @@ const mapDispatchToProps = dispatch => ({
   },
   onStartRound() {
     dispatch(startRound());
+  },
+  onAddPlayer(player) {
+    dispatch(addPlayer(player));
   }
 });
 

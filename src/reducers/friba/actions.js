@@ -9,6 +9,7 @@ export const CURRENT_HOLE_SET = "CURRENT_HOLE_SET";
 export const SCORE_INCREMENT = "SCORE_INCREMENT";
 export const SCORE_DECREMENT = "SCORE_DECREMENT";
 export const PLAYERS_RANK = "PLAYERS_RANK";
+export const PLAYER_ADD = "PLAYER_ADD";
 
 export function updateTrackName(payload) {
   return {
@@ -83,6 +84,13 @@ export function decrementScore(payload) {
 export function rankPlayers(payload) {
   return {
     type: PLAYERS_RANK,
+    payload
+  };
+}
+
+export function addPlayer(payload) {
+  return {
+    type: PLAYER_ADD,
     payload
   };
 }

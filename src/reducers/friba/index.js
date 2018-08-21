@@ -15,7 +15,8 @@ import {
   CURRENT_HOLE_SET,
   SCORE_INCREMENT,
   SCORE_DECREMENT,
-  PLAYERS_RANK
+  PLAYERS_RANK,
+  PLAYER_ADD
 } from "./actions";
 
 const initialState = {
@@ -43,34 +44,10 @@ const initialState = {
   showPlayerError: false,
   players: [
     {
-      name: "player1",
+      name: "DiscgolfPlayer",
       id: v4(),
       selected: true,
       scores: ["-", "-", "-", "-", "-", "-", "-", "-", "-"],
-      toPar: "0",
-      position: "-"
-    },
-    {
-      name: "player2",
-      id: v4(),
-      selected: true,
-      scores: ["-", "-", "-", "-", "-", "-", "-", "-", "-"],
-      toPar: "0",
-      position: "-"
-    },
-    {
-      name: "player3",
-      id: v4(),
-      selected: false,
-      scores: [],
-      toPar: "0",
-      position: "-"
-    },
-    {
-      name: "player4",
-      id: v4(),
-      selected: false,
-      scores: [],
       toPar: "0",
       position: "-"
     }
@@ -216,17 +193,6 @@ function friba(state = initialState, action) {
         )
       };
     case PLAYERS_RANK:
-      const rankedPlayers = state.players.map((player, i) => {
-        if (player.selected === true) {
-          let score = player.scores.reduce((a, b) => Number(a) + Number(b), 0);
-          let sum = state.track.holes.reduce((a, b) => a + b.par, 0);
-          console.log(`Sum: ${sum}`);
-          console.log(`Score: ${score}`);
-          return { ...player, toPar: (score - sum).toString() };
-        }
-        return player;
-      });
-
       return {
         ...state,
         players: state.players.map((player, i) => {
@@ -242,6 +208,22 @@ function friba(state = initialState, action) {
           }
           return player;
         })
+      };
+    case PLAYER_ADD:
+      console.log(action);
+      return {
+        ...state,
+        players: [
+          ...state.players,
+          {
+            name: action.payload,
+            id: v4(),
+            selected: true,
+            scores: [],
+            toPar: "0",
+            position: "-"
+          }
+        ]
       };
     default:
       return state;
