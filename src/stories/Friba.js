@@ -7,6 +7,7 @@ import CounterWithTitle from "../components/friba/CounterWithTitle";
 import CourseSelector from "../components/friba/CourseSelector";
 import Scorecard from "../components/friba/Scorecard";
 import SelectPlayers from "../components/friba/SelectPlayers";
+import AddPlayer from "../components/friba/AddPlayer";
 
 import InputWithTitle from "../components/form/InputWithTitle";
 
@@ -106,4 +107,8 @@ stories.add("Hole view", () => (
 
 stories.add("Scorecard/Save view", () => (
   <Scorecard track={track} players={players} />
+));
+
+stories.add("Add player", () => (
+  <AddPlayer onAddPlayer={action("add player")} />
 ));
