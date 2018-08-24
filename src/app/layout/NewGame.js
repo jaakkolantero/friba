@@ -65,7 +65,7 @@ class NewGame extends PureComponent {
           {track.holes.map((hole, i) => (
             <CounterWithTitle
               key={hole.id}
-              count={hole.par}
+              count={hole.par.toString()}
               title={"hole ".concat(i + 1)}
               onIncrement={() => onIncrementPar(hole.id)}
               onDecrement={() => onDecrementPar(hole.id)}

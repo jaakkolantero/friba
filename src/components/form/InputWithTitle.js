@@ -36,7 +36,7 @@ const InputWithTitle = ({
 InputWithTitle.propTypes = {
   title: PropTypes.string,
   placeholder: PropTypes.string,
-  error: PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   success: PropTypes.string,
   onChange: PropTypes.func,
   onClick: PropTypes.func
