@@ -9,6 +9,7 @@
     ]
   },
   "rules": {
-    "no-submodule-imports": [true, "bulma"]
+    "no-submodule-imports": [true, "bulma", "src/components"],
+    "interface-name": [true, "never-prefix"]
   }
 }

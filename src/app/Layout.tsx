@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import Router from "./layout/Router";
+import * as React from "react";
 import Header from "./layout/Header";
+import Router from "./layout/Router";
 
-class Layout extends Component {
-  render() {
+class Layout extends React.Component<{}, {}> {
+  public render() {
     return (
       <React.Fragment>
         <Header />
