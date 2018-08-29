@@ -9,6 +9,7 @@
     ]
   },
   "rules": {
+    "no-implicit-dependencies": [true, ["typesafe-actions"]],
     "no-submodule-imports": [true, "bulma", "src/components"],
     "interface-name": [true, "never-prefix"]
   }
