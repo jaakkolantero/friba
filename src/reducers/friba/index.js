@@ -25,6 +25,8 @@ const initialState = {
   currentHole: "",
   skippedHole: false,
   skippedHoleErrorMessage: false,
+  showNameError: false,
+  showPlayerError: false,
   track: {
     name: "",
     sum: "",
@@ -40,8 +42,6 @@ const initialState = {
       { id: v4(), par: 3 }
     ]
   },
-  showNameError: false,
-  showPlayerError: false,
   players: [
     {
       name: "DiscgolfPlayer",
