@@ -210,7 +210,6 @@ function friba(state = initialState, action) {
         })
       };
     case PLAYER_ADD:
-      console.log(action);
       return {
         ...state,
         players: [
